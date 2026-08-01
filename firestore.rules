@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Kelas berisi info guru (nama, PIN) dan subkoleksi murid.
+    // Aturan sederhana untuk kelas kecil. Jangan menyimpan data pribadi/sensitif.
+    // Untuk keamanan lebih: aktifkan Firebase App Check atau Anonymous Auth.
+    match /classes/{classId} {
+      allow read, write: if true;
+      match /students/{studentId} {
+        allow read, write: if true;
+      }
+    }
+  }
+}
